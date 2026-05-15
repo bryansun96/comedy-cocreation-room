@@ -1,0 +1,9 @@
+.env
+.streamlit/secrets.toml
+__pycache__/
+*.pyc
+.DS_Store
+孙斌_profile.md
+孙斌_简历.docx
+site/
+.claude/
