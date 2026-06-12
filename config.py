@@ -36,7 +36,7 @@ ENV_KEYS = {
         "CC_SWITCH_MODEL",
     ),
 }
-DEFAULT_MODEL = "deepseek-v3.2"
+DEFAULT_MODEL = "deepseek-v4-pro"
 
 
 def _read_secret(name: str) -> str:

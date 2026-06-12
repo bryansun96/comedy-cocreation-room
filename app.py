@@ -37,21 +37,27 @@ RESULT_STATE_KEYS = [
 CUSTOM_CSS = """
 <style>
 :root {
-    --bg: #080807;
-    --panel: rgba(22, 21, 18, 0.88);
-    --panel-strong: rgba(31, 29, 24, 0.96);
-    --panel-soft: rgba(255, 246, 222, 0.055);
-    --line: rgba(255, 246, 222, 0.13);
-    --line-strong: rgba(224, 173, 88, 0.34);
-    --text: #fff3dc;
-    --text-soft: rgba(255, 243, 220, 0.72);
-    --text-faint: rgba(255, 243, 220, 0.48);
-    --accent: #e0ad58;
-    --accent-strong: #f4cb78;
-    --signal: #7bd8ca;
-    --signal-soft: rgba(123, 216, 202, 0.13);
-    --radius-lg: 28px;
-    --radius-md: 18px;
+    --bg: #f6f9ff;
+    --panel: rgba(255, 255, 255, 0.88);
+    --panel-strong: rgba(255, 255, 255, 0.97);
+    --panel-soft: rgba(232, 241, 255, 0.76);
+    --line: rgba(73, 112, 174, 0.16);
+    --line-strong: rgba(86, 136, 224, 0.30);
+    --text: #16253f;
+    --text-soft: rgba(22, 37, 63, 0.72);
+    --text-faint: rgba(22, 37, 63, 0.48);
+    --accent: #18b8a0;
+    --accent-strong: #0f8f83;
+    --blue: #5f8df7;
+    --blue-strong: #2f62d9;
+    --blue-soft: rgba(222, 234, 255, 0.82);
+    --mint: #e9f8f4;
+    --jade: #16b99e;
+    --warm: #fffaf2;
+    --radius-lg: 30px;
+    --radius-md: 20px;
+    --shadow-soft: 0 26px 76px rgba(47, 98, 217, 0.16);
+    --shadow-card: 0 14px 40px rgba(46, 91, 164, 0.11);
     --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     --font-serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
     --font-mono: "SF Mono", "Cascadia Code", Menlo, monospace;
@@ -59,11 +65,13 @@ CUSTOM_CSS = """
 
 .stApp {
     background:
-        radial-gradient(circle at 12% 0%, rgba(224, 173, 88, 0.18), transparent 28rem),
-        radial-gradient(circle at 88% 6%, rgba(123, 216, 202, 0.11), transparent 25rem),
-        linear-gradient(180deg, #090908 0%, #11100d 52%, #070706 100%);
+        radial-gradient(circle at 8% 2%, rgba(95, 141, 247, 0.30), transparent 30rem),
+        radial-gradient(circle at 92% 0%, rgba(177, 207, 255, 0.44), transparent 28rem),
+        radial-gradient(circle at 82% 74%, rgba(24, 184, 160, 0.10), transparent 22rem),
+        radial-gradient(circle at 20% 92%, rgba(255, 250, 242, 0.86), transparent 32rem),
+        linear-gradient(180deg, #f7faff 0%, #eff5ff 50%, #ffffff 100%);
     color: var(--text);
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
 }
 
 .stApp::before {
@@ -73,10 +81,11 @@ CUSTOM_CSS = """
     pointer-events: none;
     z-index: 0;
     background-image:
-        linear-gradient(rgba(255, 246, 222, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 246, 222, 0.035) 1px, transparent 1px);
-    background-size: 76px 76px;
-    mask-image: linear-gradient(to bottom, black, transparent 76%);
+        radial-gradient(rgba(95, 141, 247, 0.10) 1px, transparent 1px),
+        radial-gradient(rgba(24, 184, 160, 0.045) 1px, transparent 1px);
+    background-position: 0 0, 18px 18px;
+    background-size: 36px 36px;
+    mask-image: linear-gradient(to bottom, black, transparent 82%);
 }
 
 [data-testid="stAppViewContainer"] > .main {
@@ -85,14 +94,14 @@ CUSTOM_CSS = """
 }
 
 [data-testid="stHeader"] {
-    background: rgba(8, 8, 7, 0.56);
+    background: rgba(247, 252, 255, 0.72);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 246, 222, 0.07);
+    border-bottom: 1px solid rgba(140, 200, 255, 0.18);
 }
 
 .block-container {
-    max-width: 1520px;
-    padding-top: 2.2rem;
+    max-width: 1120px;
+    padding-top: 2.4rem;
     padding-bottom: 5rem;
 }
 
@@ -102,7 +111,7 @@ h1, h2, h3, p, li, label, span {
 
 h1 {
     font-family: var(--font-serif);
-    letter-spacing: -0.075em;
+    letter-spacing: -0.065em;
 }
 
 h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 {
@@ -114,22 +123,22 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 [data-testid="stMarkdownContainer"] li,
 .stCaptionContainer {
     color: var(--text-soft);
-    line-height: 1.75;
+    line-height: 1.78;
 }
 
 .hero-shell {
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 36px;
-    padding: clamp(28px, 5vw, 58px);
-    margin: 10px 0 28px;
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    border-radius: 42px;
+    padding: clamp(30px, 6vw, 62px);
+    margin: 10px 0 26px;
     background:
-        radial-gradient(circle at 74% 10%, rgba(224, 173, 88, 0.22), transparent 24rem),
-        radial-gradient(circle at 18% 90%, rgba(123, 216, 202, 0.12), transparent 22rem),
-        linear-gradient(145deg, rgba(255, 246, 222, 0.095), rgba(255, 246, 222, 0.022)),
-        rgba(12, 11, 10, 0.82);
-    box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.08), 0 28px 90px rgba(0, 0, 0, 0.32);
+        radial-gradient(circle at 76% 12%, rgba(95, 141, 247, 0.22), transparent 24rem),
+        radial-gradient(circle at 12% 18%, rgba(185, 211, 255, 0.48), transparent 27rem),
+        radial-gradient(circle at 86% 88%, rgba(24, 184, 160, 0.10), transparent 18rem),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(232, 241, 255, 0.86));
+    box-shadow: var(--shadow-soft);
 }
 
 .hero-shell::before {
@@ -137,66 +146,83 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(90deg, transparent 0%, rgba(224, 173, 88, 0.11) 50%, transparent 100%),
-        repeating-linear-gradient(0deg, transparent 0 38px, rgba(255, 246, 222, 0.03) 39px 40px);
-    opacity: 0.8;
+        linear-gradient(120deg, rgba(255, 255, 255, 0.62), transparent 42%),
+        radial-gradient(circle at 10% 95%, rgba(246, 250, 255, 0.92), transparent 22rem);
     pointer-events: none;
 }
 
 .hero-content {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.72fr);
-    gap: 36px;
-    align-items: end;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.72fr);
+    gap: 34px;
+    align-items: center;
 }
 
 .hero-kicker,
 .panel-kicker,
 .stage-label {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px;
+    border: 1px solid rgba(34, 184, 164, 0.2);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.68);
     color: var(--accent-strong);
     font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
 }
 
 .hero-title {
     max-width: 10ch;
-    margin: 18px 0 22px;
+    margin: 22px 0 18px;
     color: var(--text);
-    font-size: clamp(3.8rem, 8vw, 7.8rem);
-    line-height: 0.86;
-    letter-spacing: -0.09em;
+    font-size: clamp(3.2rem, 7.2vw, 6.8rem);
+    line-height: 0.95;
+    letter-spacing: -0.08em;
 }
 
 .hero-lead {
-    max-width: 760px;
+    max-width: 720px;
     color: var(--text-soft);
-    font-size: clamp(1.08rem, 1.8vw, 1.45rem);
-    line-height: 1.78;
+    font-size: clamp(1.05rem, 1.7vw, 1.34rem);
+    line-height: 1.85;
 }
 
-.hero-console {
+.hero-note {
+    margin-top: 18px;
+    color: var(--text-faint);
+    font-size: 0.94rem;
+}
+
+.hero-console,
+.hero-guide {
     display: grid;
     gap: 14px;
     padding: 22px;
-    border: 1px solid rgba(255, 246, 222, 0.14);
-    border-radius: 26px;
-    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(16px);
 }
 
-.console-row {
+.console-row,
+.guide-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
     padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 246, 222, 0.1);
+    border-bottom: 1px solid rgba(76, 139, 164, 0.12);
     color: var(--text-soft);
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
 }
 
@@ -206,59 +232,68 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
     height: 9px;
     margin-right: 8px;
     border-radius: 50%;
-    background: var(--signal);
-    box-shadow: 0 0 20px rgba(123, 216, 202, 0.85);
+    background: var(--accent);
+    box-shadow: 0 0 18px rgba(34, 184, 164, 0.46);
 }
 
-.console-grid {
+.console-grid,
+.guide-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 10px;
 }
 
-.console-metric {
-    min-height: 96px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.console-metric,
+.guide-item {
+    display: grid;
+    gap: 6px;
     padding: 14px;
-    border: 1px solid rgba(255, 246, 222, 0.1);
-    border-radius: 18px;
-    background: rgba(255, 246, 222, 0.045);
+    border: 1px solid rgba(76, 139, 164, 0.13);
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.80), rgba(232, 241, 255, 0.58));
 }
 
-.console-metric small {
-    color: var(--text-faint);
+.console-metric small,
+.guide-item small {
+    color: var(--accent-strong);
     font-family: var(--font-mono);
     font-size: 0.68rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
-.console-metric strong {
+.console-metric strong,
+.guide-item strong {
     color: var(--text);
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.35;
 }
 
+.guide-item p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
 .demo-steps {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
-    margin: -6px 0 30px;
+    margin: -2px 0 28px;
 }
 
 .demo-step {
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 16px;
-    background: rgba(255, 246, 222, 0.046);
-    box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    border-radius: 24px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.68);
+    box-shadow: var(--shadow-card);
 }
 
 .demo-step span {
-    display: block;
-    margin-bottom: 12px;
+    display: inline-flex;
+    margin-bottom: 13px;
     color: var(--accent-strong);
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -275,23 +310,52 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
     margin: 0;
     color: var(--text-soft);
     font-size: 0.92rem;
-    line-height: 1.55;
+    line-height: 1.58;
+}
+
+.flow-section {
+    margin: 18px 0 22px;
+}
+
+.flow-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0 12px;
+}
+
+.flow-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-strong), var(--blue));
+    color: white;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    box-shadow: 0 12px 24px rgba(34, 184, 164, 0.2);
+}
+
+.flow-section-title strong {
+    font-size: 1.18rem;
 }
 
 [data-testid="stVerticalBlockBorderWrapper"] {
-    border-color: var(--line) !important;
+    border-color: rgba(255, 255, 255, 0.78) !important;
     border-radius: var(--radius-lg) !important;
     background:
-        linear-gradient(145deg, rgba(255, 246, 222, 0.07), rgba(255, 246, 222, 0.02)),
-        rgba(13, 12, 10, 0.76) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.06);
+        linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(236, 244, 255, 0.80)) !important;
+    box-shadow: var(--shadow-card);
 }
 
 [data-testid="stExpander"] {
     border: 1px solid var(--line) !important;
     border-radius: var(--radius-md) !important;
-    background: rgba(255, 246, 222, 0.035) !important;
+    background: rgba(255, 255, 255, 0.72) !important;
     overflow: hidden;
+    box-shadow: 0 10px 28px rgba(49, 125, 143, 0.08);
 }
 
 [data-testid="stExpander"] summary {
@@ -300,19 +364,18 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 }
 
 .stAlert {
-    border-radius: 18px;
-    border: 1px solid var(--line-strong);
-    background: rgba(224, 173, 88, 0.09);
+    border-radius: 20px;
+    border: 1px solid rgba(34, 184, 164, 0.2);
+    background: rgba(232, 241, 255, 0.68);
 }
 
 [data-testid="stStatusWidget"],
 [data-testid="stStatus"] {
-    border: 1px solid rgba(244, 203, 120, 0.24) !important;
-    border-radius: 22px !important;
+    border: 1px solid rgba(95, 141, 247, 0.18) !important;
+    border-radius: 24px !important;
     background:
-        linear-gradient(145deg, rgba(255, 246, 222, 0.07), rgba(255, 246, 222, 0.025)),
-        rgba(10, 9, 8, 0.82) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.07) !important;
+        linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(232, 241, 255, 0.78)) !important;
+    box-shadow: var(--shadow-card) !important;
 }
 
 [data-testid="stStatusWidget"] p,
@@ -327,7 +390,7 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 }
 
 [data-testid="stProgress"] > div {
-    background: rgba(255, 246, 222, 0.08) !important;
+    background: rgba(76, 139, 164, 0.12) !important;
     border-radius: 999px !important;
     overflow: hidden !important;
 }
@@ -335,7 +398,7 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 [data-testid="stProgress"] > div > div,
 [data-testid="stProgress"] > div > div > div,
 [data-testid="stProgress"] > div > div > div > div {
-    background: linear-gradient(90deg, var(--accent), var(--accent-strong), var(--signal)) !important;
+    background: linear-gradient(90deg, var(--blue-strong), var(--blue), var(--jade)) !important;
     border-radius: 999px !important;
 }
 
@@ -345,19 +408,19 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 
 .stButton > button {
     min-height: 46px;
-    border: 1px solid var(--line-strong) !important;
+    border: 1px solid rgba(95, 141, 247, 0.28) !important;
     border-radius: 999px !important;
-    background: linear-gradient(135deg, rgba(244, 203, 120, 0.96), rgba(173, 113, 39, 0.94)) !important;
-    color: #14100a !important;
+    background: linear-gradient(135deg, #2f62d9, #5f8df7 78%, #18b8a0) !important;
+    color: #ffffff !important;
     font-family: var(--font-sans) !important;
-    font-weight: 700 !important;
-    box-shadow: 0 16px 42px rgba(224, 173, 88, 0.16);
+    font-weight: 800 !important;
+    box-shadow: 0 16px 34px rgba(47, 98, 217, 0.20);
     transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .stButton > button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 22px 56px rgba(224, 173, 88, 0.22);
+    box-shadow: 0 22px 46px rgba(47, 98, 217, 0.25);
 }
 
 .stTextInput,
@@ -367,15 +430,11 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 
 .stTextInput input,
 .stTextArea textarea {
-    border: 1px solid rgba(255, 246, 222, 0.12) !important;
-    border-radius: 20px !important;
-    background:
-        linear-gradient(145deg, rgba(255, 246, 222, 0.07), rgba(255, 246, 222, 0.026)),
-        rgba(10, 9, 8, 0.72) !important;
+    border: 1px solid rgba(76, 139, 164, 0.14) !important;
+    border-radius: 22px !important;
+    background: rgba(255, 255, 255, 0.84) !important;
     color: var(--text) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 246, 222, 0.06),
-        inset 0 -18px 40px rgba(0, 0, 0, 0.16) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
     caret-color: var(--accent-strong) !important;
     transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
@@ -387,29 +446,24 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 
 .stTextInput input::placeholder,
 .stTextArea textarea::placeholder {
-    color: rgba(255, 243, 220, 0.34) !important;
+    color: rgba(23, 49, 66, 0.34) !important;
 }
 
 .stTextInput input:focus,
 .stTextArea textarea:focus {
-    border-color: rgba(244, 203, 120, 0.58) !important;
-    background:
-        linear-gradient(145deg, rgba(255, 246, 222, 0.09), rgba(255, 246, 222, 0.035)),
-        rgba(10, 9, 8, 0.84) !important;
+    border-color: rgba(95, 141, 247, 0.52) !important;
+    background: rgba(255, 255, 255, 0.96) !important;
     box-shadow:
-        0 0 0 1px rgba(244, 203, 120, 0.18),
-        0 18px 46px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 246, 222, 0.08) !important;
+        0 0 0 4px rgba(95, 141, 247, 0.13),
+        0 12px 30px rgba(46, 91, 164, 0.09) !important;
 }
 
 [data-baseweb="select"] > div {
-    border: 1px solid rgba(255, 246, 222, 0.12) !important;
-    border-radius: 18px !important;
-    background:
-        linear-gradient(145deg, rgba(255, 246, 222, 0.066), rgba(255, 246, 222, 0.024)),
-        rgba(10, 9, 8, 0.72) !important;
+    border: 1px solid rgba(76, 139, 164, 0.14) !important;
+    border-radius: 20px !important;
+    background: rgba(255, 255, 255, 0.84) !important;
     color: var(--text) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.055) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
 }
 
 [data-baseweb="select"] span,
@@ -436,12 +490,12 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 .stTextInput input:hover,
 .stTextArea textarea:hover,
 [data-baseweb="select"] > div:hover {
-    border-color: rgba(244, 203, 120, 0.34) !important;
+    border-color: rgba(95, 141, 247, 0.34) !important;
 }
 
 .stTextInput input:-webkit-autofill {
     -webkit-text-fill-color: var(--text) !important;
-    box-shadow: 0 0 0 1000px rgba(10, 9, 8, 0.92) inset !important;
+    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.96) inset !important;
 }
 
 [data-testid="stRadio"] label,
@@ -454,9 +508,9 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 
 [data-testid="stMetric"] {
     padding: 14px;
-    border: 1px solid rgba(255, 246, 222, 0.1);
-    border-radius: 18px;
-    background: rgba(255, 246, 222, 0.04);
+    border: 1px solid rgba(76, 139, 164, 0.12);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.72);
 }
 
 [data-testid="stMetricLabel"] p {
@@ -471,20 +525,18 @@ h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContaine
 }
 
 hr {
-    border-color: rgba(255, 246, 222, 0.1) !important;
+    border-color: rgba(76, 139, 164, 0.12) !important;
 }
 
 code, pre {
     border-radius: 16px !important;
-    background: rgba(0, 0, 0, 0.34) !important;
+    background: rgba(234, 248, 252, 0.82) !important;
+    color: #173142 !important;
 }
 
 @media (max-width: 980px) {
     .hero-content,
     .demo-steps {
-        grid-template-columns: 1fr;
-    }
-    .console-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -566,32 +618,35 @@ def render_header():
         <section class="hero-shell">
             <div class="hero-content">
                 <div>
-                    <div class="hero-kicker">共创工作坊智能体助手 · 产品演示</div>
-                    <h1 class="hero-title">智能体协作工作台</h1>
+                    <div class="hero-kicker">From a rough idea to a clearer next step</div>
+                    <h1 class="hero-title">喜剧点子共创小助手</h1>
                     <p class="hero-lead">
-                        面向喜剧共创工作坊的人工智能产品最小可行原型。它不是自动成稿工具，而是把共创讨论拆成结构化输入、
-                        多角色评价、质量治理、风险提示和下一轮迭代计划。
+                        你可以把一个生活观察、一个尴尬场景，或者一段还没想清楚的草稿放进来。这里不会替你写完剧本，
+                        而是帮你把点子拆清楚，看看它可以往哪几个方向发展、哪里好玩、哪里还需要再改。
+                    </p>
+                    <p class="hero-note">
+                        适合没有喜剧创作经验的人先理解：一个好点子通常需要清楚的角色、冲突、升级方式，以及最后仍然由人来判断的笑感。
                     </p>
                 </div>
-                <aside class="hero-console">
-                    <div class="console-row">
-                        <span><i class="console-dot"></i>工作流在线</span>
-                        <span>人在回路</span>
+                <aside class="hero-guide">
+                    <div class="guide-title">
+                        <span><i class="console-dot"></i>你会得到什么</span>
+                        <span>一步步来</span>
                     </div>
-                    <div class="console-grid">
-                        <div class="console-metric"><small>工作模式</small><strong>设定发散 / 大纲诊断</strong></div>
-                        <div class="console-metric"><small>智能体机制</small><strong>质量自评 · 共识检测 · 新鲜度治理</strong></div>
-                        <div class="console-metric"><small>输出形态</small><strong>结构化评审工作台</strong></div>
-                        <div class="console-metric"><small>产品边界</small><strong>辅助判断，不替代创作</strong></div>
+                    <div class="guide-list">
+                        <div class="guide-item"><small>Idea</small><strong>把模糊想法说清楚</strong><p>先把题材、角色关系和不想要的方向放到同一张纸上。</p></div>
+                        <div class="guide-item"><small>Direction</small><strong>找到可继续聊的方向</strong><p>如果只有一个点子，会先给你 3 个不同走法。</p></div>
+                        <div class="guide-item"><small>Feedback</small><strong>从三个角度看问题</strong><p>分别看结构、表演、现场呈现是否成立。</p></div>
+                        <div class="guide-item"><small>Next</small><strong>带走下一轮修改重点</strong><p>不是给最终答案，而是告诉你接下来先讨论什么。</p></div>
                     </div>
                 </aside>
             </div>
         </section>
         <section class="demo-steps">
-            <div class="demo-step"><span>01</span><strong>载入示例</strong><p>点击左侧示例简报，先看到完整输入结构。</p></div>
-            <div class="demo-step"><span>02</span><strong>选择模式</strong><p>从设定发散或大纲诊断进入不同状态流。</p></div>
-            <div class="demo-step"><span>03</span><strong>查看输出</strong><p>阅读三角色评审、共识检测、新鲜度判断和下一轮计划。</p></div>
-            <div class="demo-step"><span>04</span><strong>审阅治理</strong><p>展开智能体推理链路，看质量自评、重试与风险补救。</p></div>
+            <div class="demo-step"><span>01</span><strong>写下现在有的</strong><p>一句观察、一个角色关系、一个场景，或者一段草稿都可以。</p></div>
+            <div class="demo-step"><span>02</span><strong>选择你需要什么</strong><p>只有点子就找方向；已经有草稿就看哪里弱、怎么改。</p></div>
+            <div class="demo-step"><span>03</span><strong>看结构化反馈</strong><p>结果会分块展示，不需要懂专业术语也能跟着看。</p></div>
+            <div class="demo-step"><span>04</span><strong>决定下一步</strong><p>最后带走 3 个最值得先改的动作，继续由你来判断。</p></div>
         </section>
         """,
         unsafe_allow_html=True,
@@ -617,7 +672,7 @@ def render_runtime_config():
             placeholder="例如：http://127.0.0.1:15721",
         )
         st.text_input("访问密钥", key="runtime_api_key", type="password")
-        st.text_input("模型名称", key="runtime_model", placeholder="例如：deepseek-v3.2")
+        st.text_input("模型名称", key="runtime_model", placeholder="例如：deepseek-v4-pro")
         st.caption(
             "这个区域用于验证真实模型调用链路；优先读取环境变量，也兼容通用模型代理配置。"
         )
@@ -713,53 +768,57 @@ def render_runtime_diagnostics(summary):
 def render_input_panel():
     priority_options = get_team_priority_options()
 
-    st.markdown("<div class='panel-kicker'>结构化输入简报</div>", unsafe_allow_html=True)
-    st.subheader("本轮讨论简报")
-    st.caption("先定义这一轮要做什么，再补题材、边界和团队关注点，系统会把它整理成可讨论的结构化材料。")
+    st.markdown("<div class='panel-kicker'>Step 1 · 先把想法放进来</div>", unsafe_allow_html=True)
+    st.subheader("告诉我你现在手里有什么")
+    st.caption("不用写完整剧本。可以只是一句生活观察、一个人物关系、一个尴尬场面，或者一段还没打磨好的草稿。")
 
-    st.markdown("### 这一轮要做什么")
+    st.markdown("### 这次你想先做哪件事")
     st.radio(
-        "工作模式",
+        "选择任务",
         ["设定发散", "大纲诊断"],
         key="input_mode",
         horizontal=True,
+        format_func=lambda option: {
+            "设定发散": "我只有一个点子，先找 3 个方向",
+            "大纲诊断": "我已经有草稿，想知道哪里弱",
+        }.get(option, option),
     )
     st.caption(
-        "设定发散：适合只有生活观察、角色关系或题材苗头时；大纲诊断：适合已经有方向或草稿时。"
+        "如果你还没想清楚，就选第一个；如果已经有故事梗概、段落或草稿，就选第二个。"
     )
 
-    st.markdown("### 题材与已有素材")
+    st.markdown("### 点子或草稿")
     st.text_area(
-        "主题 / 生活观察 / 初步设定",
+        "主题 / 生活观察 / 初步想法",
         key="input_topic",
-        placeholder="例如：一个人把所有生活问题都当成项目管理问题来处理。",
+        placeholder="例如：一个人总是把生活里的小事当成正式项目来管理。",
         height=140,
     )
     st.text_area(
-        "现有大纲 / 草稿 / 已有方向（可选）",
+        "已有草稿 / 大概剧情（可选）",
         key="input_existing_draft",
-        placeholder="设定发散时可补充已有方向；大纲诊断时建议直接粘贴现有大纲或草稿。",
+        placeholder="如果你已经写了几句话或一段大概剧情，可以贴在这里；没有也没关系。",
         height=140,
     )
 
-    st.markdown("### 表演与边界信息")
+    st.markdown("### 角色和边界")
     st.selectbox(
-        "表演形式",
+        "大概想做成什么形式",
         ["短剧 / Sketch", "双人", "多人", "肢体", "音乐", "其他"],
         key="input_format_type",
     )
-    st.selectbox("角色数量", ["1", "2", "3", "4+"], key="input_character_count")
-    st.text_input("角色关系（可选）", key="input_character_relationship")
-    st.text_input("这轮想打到什么观众感受", key="input_audience_feeling")
+    st.selectbox("大概有几个角色", ["1", "2", "3", "4+"], key="input_character_count")
+    st.text_input("角色之间是什么关系（可选）", key="input_character_relationship")
+    st.text_input("希望观众看完有什么感觉", key="input_audience_feeling")
     st.text_area(
-        "约束 / 边界 / 不想要什么",
+        "不想要什么 / 有哪些限制",
         key="input_constraints",
-        placeholder="例如：不要太像短视频段子；不要只有职场黑话；希望适合双人表演。",
+        placeholder="例如：不要太像短视频段子；不要只靠网络热梗；希望适合两个人演。",
         height=100,
     )
 
-    with st.expander("团队这轮最关心什么（可选）", expanded=False):
-        st.text_area("团队当前最担心什么", key="input_team_concern", height=90)
+    with st.expander("如果你有特别担心的地方，可以补充在这里", expanded=False):
+        st.text_area("你现在最担心这个点子哪里不成立", key="input_team_concern", height=90)
         priority_label = priority_options.get(st.session_state.input_team_priority, priority_options["clarity"])
         st.selectbox(
             "这轮最想优先解决什么",
@@ -772,14 +831,14 @@ def render_input_panel():
 
     c1, c2 = st.columns(2)
     with c1:
-        generate = st.button("生成本轮讨论材料", use_container_width=True)
+        generate = st.button("开始整理这个点子", use_container_width=True)
     with c2:
-        load_example = st.button("载入示例简报", use_container_width=True, on_click=load_example_inputs)
+        load_example = st.button("先看一个示例", use_container_width=True, on_click=load_example_inputs)
 
-    st.caption("设定发散会先给 3 个方向；大纲诊断会直接进入结构反馈与下一轮优先修改点。")
+    st.caption("下一步会把内容整理成可讨论的方向或反馈，不会直接替你写成最终剧本。")
 
     if load_example:
-        st.success("已载入示例简报，接下来会展示一轮完整的讨论输出。")
+        st.success("已载入示例。你可以直接往下看一轮完整输出，也可以改成自己的想法再生成。")
 
     return {
         "mode": st.session_state.input_mode,
@@ -797,64 +856,68 @@ def render_input_panel():
 
 
 def render_premise_cards(premises):
-    st.subheader("可供讨论的 3 个方向")
-    st.caption("先挑一个最值得继续聊的方向，后面的三视角判断和修改建议会围绕它展开。")
+    st.markdown("<div class='panel-kicker'>Step 2 · 先挑一个方向继续聊</div>", unsafe_allow_html=True)
+    st.subheader("这里有 3 个可以发展的方向")
+    st.caption("它们不是最终答案，而是 3 个可比较的走法。先选一个你最想继续看的方向，后面会围绕它给反馈。")
     cols = st.columns(3)
     selected_index = None
     for idx, premise in enumerate(premises[:3]):
         with cols[idx]:
             with st.container(border=True):
                 st.markdown(f"### {premise['title']}")
-                st.markdown(f"**设定**：{premise['premise']}")
-                st.markdown(f"**角色动态**：{premise.get('character_dynamic', '')}")
-                st.markdown(f"**核心冲突**：{premise['core_conflict']}")
-                st.markdown(f"**为什么可能成立**：{premise['why_it_might_work']}")
-                st.markdown(f"**最大风险**：{premise['biggest_risk']}")
-                st.markdown(f"**升级路径**：{premise['escalation_path']}")
-                if st.button("选为本轮讨论焦点", key=f"use_{idx}"):
+                st.markdown(f"**这个点子在说什么**：{premise['premise']}")
+                st.markdown(f"**人物关系**：{premise.get('character_dynamic', '')}")
+                st.markdown(f"**好玩的冲突**：{premise['core_conflict']}")
+                st.markdown(f"**为什么可能有戏**：{premise['why_it_might_work']}")
+                st.markdown(f"**目前最大的风险**：{premise['biggest_risk']}")
+                st.markdown(f"**可以怎么升级**：{premise['escalation_path']}")
+                if st.button("我想继续看这个", key=f"use_{idx}"):
                     selected_index = idx
     return selected_index
 
 
 def render_selected_direction(selected):
     with st.container(border=True):
-        st.subheader("当前讨论焦点")
-        st.caption("下面的三视角判断、新鲜度评估和下一轮建议，都会围绕这个方向展开。")
+        st.markdown("<div class='panel-kicker'>Step 3 · 当前选中的方向</div>", unsafe_allow_html=True)
+        st.subheader("我们先围绕这个点子继续分析")
+        st.caption("下面的反馈都会基于这个方向展开。你可以把它理解成一张临时草图，而不是最终定稿。")
         st.markdown(f"**方向**：{selected['title']}")
-        st.markdown(f"**概述**：{selected['summary']}")
+        st.markdown(f"**一句话说明**：{selected['summary']}")
         st.markdown(f"**形式**：{selected['format']}")
         st.markdown(f"**角色关系**：{selected['character_setup']}")
-        st.markdown(f"**预期感受**：{selected['audience_feeling']}")
+        st.markdown(f"**希望观众感受到**：{selected['audience_feeling']}")
 
 
 def render_three_role_critique(critique):
-    st.subheader("三种创作视角的判断")
-    st.caption("先看编剧、演员、导演分别在意什么，再决定团队要先对齐哪些问题。")
+    st.markdown("<div class='panel-kicker'>Step 4 · 从三个角度看看它稳不稳</div>", unsafe_allow_html=True)
+    st.subheader("编剧、演员、导演会分别担心什么")
+    st.caption("不用有专业背景也能看：编剧看故事结构，演员看角色好不好演，导演看现场或画面能不能成立。")
     cols = st.columns(3)
     mapping = [
-        ("编剧视角", critique["writer"]),
-        ("演员视角", critique["performer"]),
-        ("导演视角", critique["director"]),
+        ("编剧视角", "看这个点子是否清楚、冲突能不能持续", critique["writer"]),
+        ("演员视角", "看角色有没有可演的动作、态度和节奏", critique["performer"]),
+        ("导演视角", "看场面、节奏和观众理解是否顺畅", critique["director"]),
     ]
-    for col, (title, content) in zip(cols, mapping):
+    for col, (title, helper, content) in zip(cols, mapping):
         with col:
             with st.container(border=True):
                 st.markdown(f"### {title}")
-                st.markdown("**已经成立的点**")
+                st.caption(helper)
+                st.markdown("**已经不错的地方**")
                 for item in content["what_works"]:
                     st.markdown(f"- {item}")
-                st.markdown("**还偏弱的点**")
+                st.markdown("**还需要加强的地方**")
                 for item in content["what_feels_weak"]:
                     st.markdown(f"- {item}")
-                st.markdown("**这一视角最想先改什么**")
+                st.markdown("**这一角度最想先改**")
                 for item in content["most_important_fix"]:
                     st.markdown(f"- {item}")
 
-    st.markdown("### 优先对齐的问题")
-    st.markdown("**大家基本同意的点**")
+    st.markdown("### 这轮最值得先讨论的问题")
+    st.markdown("**大家都比较同意的点**")
     for item in critique["synthesis"]["alignments"]:
         st.markdown(f"- {item}")
-    st.markdown("**还没完全对齐的点**")
+    st.markdown("**还没有完全想清楚的点**")
     for item in critique["synthesis"]["differences"]:
         st.markdown(f"- {item}")
     st.markdown("**建议下一轮先聊什么**")
@@ -872,24 +935,24 @@ def render_freshness_check(freshness):
         "Weak": "偏弱",
     }
     overall = freshness_level_map.get(freshness.get("overall"), freshness.get("overall"))
-    st.subheader("新鲜度判断：这个方向会不会落俗")
-    st.caption("新鲜度不是附带检查，而是判断这个方向值不值得继续推进的核心标准之一。")
+    st.subheader("这个点子会不会太像常见套路")
+    st.caption("这里检查的不是“好不好笑”的最终结论，而是提醒它有没有太熟、太泛、太像别人已经做过的风险。")
     st.markdown(f"**整体判断**：{overall}")
     st.markdown(f"**一句话诊断**：{freshness['diagnosis']}")
 
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("**哪里有新鲜感**")
+        st.markdown("**哪里比较新鲜**")
         for item in freshness["fresh_points"]:
             st.markdown(f"- {item}")
-        st.markdown("**为什么会出现这个风险**")
+        st.markdown("**为什么会有这个风险**")
         for item in freshness["why_risk"]:
             st.markdown(f"- {item}")
     with c2:
-        st.markdown("**哪里容易落俗**")
+        st.markdown("**哪里可能太常见**")
         for item in freshness["generic_risks"]:
             st.markdown(f"- {item}")
-        st.markdown("**如果继续做，优先往哪改**")
+        st.markdown("**如果继续做，可以先往哪改**")
         for item in freshness["improvements"]:
             st.markdown(f"- {item}")
 
@@ -903,11 +966,11 @@ def render_consensus_alert(consensus):
         "Medium": "中等",
         "Low": "低",
     }
-    st.subheader("团队可先对齐的重点")
-    st.info("如果团队要快速推进，可以先从下面这些三方都在意的点开始。")
+    st.subheader("大家都在意的重点")
+    st.info("如果想快速推进，可以先处理这些多个角度都提到的问题。")
     level = consensus.get("consensus_level")
     if level:
-        st.caption(f"共识程度：{consensus_level_map.get(level, level)}")
+        st.caption(f"一致程度：{consensus_level_map.get(level, level)}")
     for item in consensus.get("shared_conclusions", []):
         st.markdown(f"- {item}")
     focus = consensus.get("recommended_focus")
@@ -915,21 +978,21 @@ def render_consensus_alert(consensus):
         st.markdown(f"**建议优先讨论**：{focus}")
     reasoning = consensus.get("reasoning")
     if reasoning:
-        with st.expander("查看补充说明", expanded=False):
+        with st.expander("为什么这样判断", expanded=False):
             st.markdown(reasoning)
 
 
 def render_freshness_remediation(remediations):
-    st.subheader("补充可讨论的改写方向")
-    st.warning("这个方向现在有一点熟悉感，因此这里补了 3 个可以继续往下聊的改写方向。")
+    st.subheader("如果觉得太常见，可以试试这些转向")
+    st.warning("这个方向现在有一点熟悉感，下面补了 3 个可以继续讨论的改写方向。")
     cols = st.columns(min(3, len(remediations))) if remediations else []
     for col, remediation in zip(cols, remediations[:3]):
         with col:
             with st.container(border=True):
                 st.markdown(f"### {remediation['what_to_change']}")
-                st.markdown(f"**为什么像套路**：{remediation['why_its_cliche']}")
-                st.markdown(f"**更新鲜的替代**：{remediation['fresh_alternative']}")
-                st.markdown(f"**可以怎么转一下**：{remediation['example_twist']}")
+                st.markdown(f"**为什么现在像套路**：{remediation['why_its_cliche']}")
+                st.markdown(f"**可以换成什么**：{remediation['fresh_alternative']}")
+                st.markdown(f"**一个具体转法**：{remediation['example_twist']}")
 
 
 _AGENT_LABEL_MAP = {
@@ -1024,9 +1087,9 @@ def render_react_trace_panel() -> None:
 
     auto_expand = (premise_trace.get("total_retries") or 0) > 0
 
-    with st.expander("智能体推理与治理过程", expanded=auto_expand):
+    with st.expander("为什么会给出这些建议（调试信息）", expanded=auto_expand):
         st.caption(
-            "记录每个智能体的「思考 → 行动 → 观察」链路，用于展示质量自评、重试、共识检测与风险补救机制。"
+            "这里记录系统如何生成、检查和必要时重试结果。普通使用时可以先不看，想了解后台过程时再展开。"
         )
 
         if agent_errors:
@@ -1059,8 +1122,9 @@ def render_react_trace_panel() -> None:
 
 
 def render_next_iteration_plan(moves):
-    st.subheader("下一轮优先修改什么")
-    st.caption("如果决定继续推进这个方向，建议先围绕下面 3 个动作展开讨论。")
+    st.markdown("<div class='panel-kicker'>Step 5 · 带走下一轮修改重点</div>", unsafe_allow_html=True)
+    st.subheader("接下来先改哪 3 件事")
+    st.caption("如果你想继续发展这个方向，可以先从下面 3 个动作开始，而不是一次性重写全部。")
     cols = st.columns(3)
     for col, move in zip(cols, moves[:3]):
         with col:
@@ -1071,15 +1135,15 @@ def render_next_iteration_plan(moves):
 
 
 def render_human_judgment_gate(items):
-    st.subheader("人工判断提醒")
-    st.warning("以下建议用于帮助讨论，不替代创作团队的最终判断。")
+    st.subheader("最后仍然需要人来判断")
+    st.warning("这些建议只是帮你整理讨论方向。最后好不好笑、适不适合演、要不要继续做，仍然要由创作者自己决定。")
     for item in items:
         st.markdown(f"- {item}")
 
 
 def render_prompt_debug():
-    st.markdown("### 提示词与产品机制验证")
-    st.caption("这里展示各阶段提示词，便于说明这个演示不是单轮提示词，而是分阶段智能体工作流。")
+    st.markdown("### 后台提示词预览")
+    st.caption("这里给开发或演示排查使用，普通用户不需要理解这些内容。")
     for name, content in prompts.items():
         st.markdown(f"**{name}**")
         st.code(content[:800] + ("\n..." if len(content) > 800 else ""), language="markdown")
@@ -1092,8 +1156,8 @@ def render_debug_panel():
     if not has_runtime and not has_actions:
         return
 
-    with st.expander("后台诊断 / 技术验证信息", expanded=False):
-        st.caption("这里展示后台动作、模型返回与耗时信息，用于证明演示的真实调用链路和可排查性。")
+    with st.expander("后台诊断（调试用）", expanded=False):
+        st.caption("这里展示模型调用、耗时和后台动作。普通体验时可以忽略。")
         if has_actions:
             st.markdown("**后台触发的动作**")
             for action in (st.session_state.get("agent_actions") or []):
@@ -1198,7 +1262,7 @@ def handle_primary_action(state):
 
 
 def render_results_workspace(state):
-    st.markdown("<div class='panel-kicker'>智能体输出工作台</div>", unsafe_allow_html=True)
+    st.markdown("<div class='panel-kicker'>整理结果</div>", unsafe_allow_html=True)
 
     if st.session_state.get("generation_error"):
         st.error(st.session_state.generation_error)
@@ -1220,7 +1284,7 @@ def render_results_workspace(state):
                 return
 
         if not st.session_state.get("selected_direction"):
-            st.info("先从上面的 3 个方向里选一个，右侧就会继续展开三视角判断、新鲜度风险和下一轮讨论重点。")
+            st.info("先从上面的 3 个方向里选一个，下面就会继续展开三种视角的反馈、套路风险和下一轮修改重点。")
 
     if st.session_state.get("selected_direction"):
         render_selected_direction(st.session_state.selected_direction)
@@ -1240,31 +1304,50 @@ def render_results_workspace(state):
 
     has_results = any(st.session_state.get(key) for key in RESULT_STATE_KEYS if key != "generation_error")
     if not has_results:
-        st.subheader("本轮讨论输出板")
+        st.subheader("第二步：结果会出现在这里")
         st.info(
-            "这是一个结构化智能体工作流演示，不是单轮提示词：先把输入压成讨论简报，再经过多角色评价、质量治理和人类判断边界。"
+            "填写上面的内容后，我会把它整理成几个可以讨论的部分。你不需要懂喜剧行业术语，只要按顺序往下看就可以。"
         )
-        st.markdown("- 如果是**设定发散**，你会先看到 3 个可比较的方向。\n"
-                    "- 如果是**大纲诊断**，你会直接看到结构反馈和下一轮修改重点。\n"
-                    "- 接着会出现编剧 / 演员 / 导演三种视角的判断。\n"
-                    "- 同时会补一层新鲜度风险和共识检测，帮助判断这个方向值不值得继续推。\n"
-                    "- 最后带走下一轮最值得优先讨论的 3 个动作，并保留人工判断提醒。")
+        st.markdown("- 如果你选择**我只有一个点子**，会先看到 3 个不同发展方向。\n"
+                    "- 如果你选择**我已经有草稿**，会直接看到哪里清楚、哪里还弱。\n"
+                    "- 后面会分别从故事结构、角色表演、现场呈现三个角度给反馈。\n"
+                    "- 还会提醒这个点子会不会太像常见套路。\n"
+                    "- 最后会给你 3 个下一轮最值得先改的动作。")
 
 
 def main():
     initialize_session_state()
     inject_design_system()
     render_header()
-    left, right = st.columns([1, 2], gap="large")
 
-    with left:
-        with st.container(border=True):
-            state = render_input_panel()
+    st.markdown(
+        """
+        <section class="flow-section">
+            <div class="flow-section-title">
+                <span class="flow-number">01</span>
+                <strong>先填写你现在有的想法</strong>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+    with st.container(border=True):
+        state = render_input_panel()
 
-    with right:
-        with st.container(border=True):
-            handle_primary_action(state)
-            render_results_workspace(state)
+    st.markdown(
+        """
+        <section class="flow-section">
+            <div class="flow-section-title">
+                <span class="flow-number">02</span>
+                <strong>再按顺序查看整理结果</strong>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+    with st.container(border=True):
+        handle_primary_action(state)
+        render_results_workspace(state)
 
 
 if __name__ == "__main__":
