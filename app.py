@@ -681,44 +681,33 @@ def render_runtime_config():
 class ProgressReporter:
     def __init__(self):
         self._status = None
-        self._progress = None
+        self._fallback = None
         self._supports_status = hasattr(st, "status")
 
     def start(self, label: str):
         if self._supports_status:
             self._status = st.status(label, expanded=True)
-        self._progress = st.progress(0, text=label)
+        else:
+            self._fallback = st.empty()
+            self._fallback.info(label)
 
     def update(self, step: str, label: str):
-        progress_map = {
-            "prepare": 10,
-            "premise": 25,
-            "quality_eval": 40,
-            "retry": 45,
-            "parallel": 60,
-            "consensus": 72,
-            "remediation": 78,
-            "next_iteration": 88,
-            "human_judgment": 93,
-            "complete": 100,
-            "error": 100,
-        }
         if self._status is not None:
             self._status.update(label=label)
-        if self._progress is not None:
-            self._progress.progress(progress_map.get(step, 0), text=label)
+        elif self._fallback is not None:
+            self._fallback.info(label)
 
     def complete(self, label: str):
         if self._status is not None:
-            self._status.update(label=label, state="complete")
-        if self._progress is not None:
-            self._progress.progress(100, text=label)
+            self._status.update(label=label, state="complete", expanded=False)
+        elif self._fallback is not None:
+            self._fallback.success(label)
 
     def error(self, label: str):
         if self._status is not None:
-            self._status.update(label=label, state="error")
-        if self._progress is not None:
-            self._progress.progress(100, text=label)
+            self._status.update(label=label, state="error", expanded=False)
+        elif self._fallback is not None:
+            self._fallback.error(label)
 
 
 def _append_runtime_history(summary):
