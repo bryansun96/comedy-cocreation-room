@@ -83,8 +83,13 @@ class LLMClient:
 
         if response.status_code == 401:
             raise LLMClientError("调用模型失败：鉴权失败，请检查 API Key。")
+        if response.status_code == 402:
+            raise LLMClientError("调用模型失败：DeepSeek 账户余额不足，请先充值。")
         if response.status_code == 403:
-            raise LLMClientError("调用模型失败：当前 token 没有权限访问该模型或接口。")
+            raise LLMClientError(
+                "调用模型失败：当前 token 没有权限访问该模型或接口。"
+                f" 上游返回：{response.text[:500]}"
+            )
         if response.status_code == 404:
             raise LLMClientError(_build_not_found_message(self._base_url, self.model, response.text))
         if response.status_code == 429:

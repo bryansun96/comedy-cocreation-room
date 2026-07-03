@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 import os
+from pathlib import Path
 from urllib.parse import urlparse
 
 import streamlit as st
 
 try:
     from dotenv import load_dotenv
-    load_dotenv()
+    load_dotenv(dotenv_path=Path(__file__).with_name(".env"))
 except ImportError:
     pass
 
@@ -36,6 +37,7 @@ ENV_KEYS = {
         "CC_SWITCH_MODEL",
     ),
 }
+DEFAULT_BASE_URL = "https://api.deepseek.com"
 DEFAULT_MODEL = "deepseek-v4-pro"
 
 
@@ -68,7 +70,7 @@ def _normalize_base_url(base_url: str) -> str:
 def get_runtime_defaults() -> RuntimeConfig:
     model = _read_first(ENV_KEYS["model"]) or DEFAULT_MODEL
     return RuntimeConfig(
-        base_url=_normalize_base_url(_read_first(ENV_KEYS["base_url"])),
+        base_url=_normalize_base_url(_read_first(ENV_KEYS["base_url"]) or DEFAULT_BASE_URL),
         api_key=_read_first(ENV_KEYS["api_key"]),
         model=model,
     )
