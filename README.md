@@ -9,6 +9,17 @@ cp .env.example .env
 streamlit run app.py
 ```
 
+## 视觉样例 v0
+
+独立的叙事型视觉样例不会调用模型，也不会修改正式应用的 Session State：
+
+```bash
+streamlit run v0_preview.py
+```
+
+页面使用本地海岸照片、编辑感排版和 CSS 原创线描，相关摄影来源记录在
+`assets/PHOTO_CREDITS.md`。
+
 ## ModelScope 部署配置
 
 在 Studio 的环境变量或 Secrets 中配置：
