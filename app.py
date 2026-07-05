@@ -10,6 +10,7 @@ from pipeline import (
     generate_premise_options,
 )
 from prompt_loader import load_all_prompts
+from v0_theme import build_v0_css
 
 st.set_page_config(page_title="Co-Creation Room Copilot", layout="wide")
 
@@ -546,6 +547,7 @@ code, pre {
 
 def inject_design_system():
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+    st.markdown(build_v0_css(), unsafe_allow_html=True)
 
 
 def initialize_session_state():
@@ -615,39 +617,34 @@ def load_example_inputs():
 def render_header():
     st.markdown(
         """
-        <section class="hero-shell">
-            <div class="hero-content">
-                <div>
-                    <div class="hero-kicker">From a rough idea to a clearer next step</div>
-                    <h1 class="hero-title">喜剧点子共创小助手</h1>
+        <section class="editorial-hero">
+            <div class="hero-copy">
+                <div class="eyebrow">Comedy Co-Creation Room · A creative journey</div>
+                <h1 class="hero-title">把一个喜剧点子，慢慢变成可以讨论的作品</h1>
+                <div class="hero-bottom">
                     <p class="hero-lead">
-                        你可以把一个生活观察、一个尴尬场景，或者一段还没想清楚的草稿放进来。这里不会替你写完剧本，
-                        而是帮你把点子拆清楚，看看它可以往哪几个方向发展、哪里好玩、哪里还需要再改。
-                    </p>
-                    <p class="hero-note">
-                        适合没有喜剧创作经验的人先理解：一个好点子通常需要清楚的角色、冲突、升级方式，以及最后仍然由人来判断的笑感。
+                        从一句生活观察出发，经过方向选择、三种视角和风格收敛，
+                        最后进入真正值得继续修改的头脑风暴。
                     </p>
                 </div>
-                <aside class="hero-guide">
-                    <div class="guide-title">
-                        <span><i class="console-dot"></i>你会得到什么</span>
-                        <span>一步步来</span>
-                    </div>
-                    <div class="guide-list">
-                        <div class="guide-item"><small>Idea</small><strong>把模糊想法说清楚</strong><p>先把题材、角色关系和不想要的方向放到同一张纸上。</p></div>
-                        <div class="guide-item"><small>Direction</small><strong>找到可继续聊的方向</strong><p>如果只有一个点子，会先给你 3 个不同走法。</p></div>
-                        <div class="guide-item"><small>Feedback</small><strong>从三个角度看问题</strong><p>分别看结构、表演、现场呈现是否成立。</p></div>
-                        <div class="guide-item"><small>Next</small><strong>带走下一轮修改重点</strong><p>不是给最终答案，而是告诉你接下来先讨论什么。</p></div>
-                    </div>
-                </aside>
             </div>
         </section>
-        <section class="demo-steps">
-            <div class="demo-step"><span>01</span><strong>写下现在有的</strong><p>一句观察、一个角色关系、一个场景，或者一段草稿都可以。</p></div>
-            <div class="demo-step"><span>02</span><strong>选择你需要什么</strong><p>只有点子就找方向；已经有草稿就看哪里弱、怎么改。</p></div>
-            <div class="demo-step"><span>03</span><strong>看结构化反馈</strong><p>结果会分块展示，不需要懂专业术语也能跟着看。</p></div>
-            <div class="demo-step"><span>04</span><strong>决定下一步</strong><p>最后带走 3 个最值得先改的动作，继续由你来判断。</p></div>
+        <nav class="journey-line">
+            <span>01 Drop the idea</span>
+            <span>02 Choose a direction</span>
+            <span>03 About the idea</span>
+            <span>04 Keep it fresh</span>
+            <span>05 Take the next step</span>
+        </nav>
+        <section class="chapter-heading">
+            <div class="chapter-number">01</div>
+            <div>
+                <div class="chapter-kicker">Drop the idea</div>
+                <h2 class="chapter-title">先把脑海中的想法，放进来</h2>
+                <p class="chapter-intro">不用写完整剧本。一句观察、一个尴尬场面、两个人的关系，已经足够开始。</p>
+            </div>
         </section>
+        <div class="wave-mark"></div>
         """,
         unsafe_allow_html=True,
     )
@@ -1309,26 +1306,18 @@ def main():
     inject_design_system()
     render_header()
 
-    st.markdown(
-        """
-        <section class="flow-section">
-            <div class="flow-section-title">
-                <span class="flow-number">01</span>
-                <strong>先填写你现在有的想法</strong>
-            </div>
-        </section>
-        """,
-        unsafe_allow_html=True,
-    )
     with st.container(border=True):
         state = render_input_panel()
 
     st.markdown(
         """
+        <section class="photo-break">
+            <div class="photo-quote">好点子不必一开始就完整，它只需要一个值得落地的锚点。</div>
+        </section>
         <section class="flow-section">
             <div class="flow-section-title">
                 <span class="flow-number">02</span>
-                <strong>再按顺序查看整理结果</strong>
+                <strong>让想法进入真实的整理与反馈</strong>
             </div>
         </section>
         """,

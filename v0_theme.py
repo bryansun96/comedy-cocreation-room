@@ -259,6 +259,51 @@ h1, h2, h3 {{
     padding: clamp(18px, 3vw, 34px);
 }}
 
+.panel-kicker {{
+    display: inline-flex;
+    width: fit-content;
+    margin-bottom: 12px;
+    color: var(--terracotta) !important;
+    font-family: var(--sans);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}}
+
+.flow-section {{
+    margin: 88px 0 28px;
+}}
+
+.flow-section-title {{
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 24px;
+    align-items: center;
+    padding-top: 25px;
+    border-top: 1px solid var(--line);
+}}
+
+.flow-number {{
+    display: block;
+    width: auto;
+    height: auto;
+    color: var(--terracotta) !important;
+    background: none !important;
+    box-shadow: none !important;
+    font-family: var(--display);
+    font-size: 2.7rem;
+    font-style: italic;
+    font-weight: 400;
+}}
+
+.flow-section-title strong {{
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 500;
+}}
+
 .stTextInput input,
 .stTextArea textarea,
 [data-baseweb="select"] > div {{
@@ -576,6 +621,55 @@ h1, h2, h3 {{
     background: rgba(247,243,235,.4) !important;
 }}
 
+[data-testid="stStatusWidget"],
+[data-testid="stStatus"] {{
+    border: 1px solid rgba(41,42,38,.24) !important;
+    border-radius: 5px !important;
+    background: rgba(247,243,235,.78) !important;
+    box-shadow: 0 14px 34px rgba(64,52,35,.07) !important;
+}}
+
+[data-testid="stStatusWidget"]::before,
+[data-testid="stStatus"]::before {{
+    content: "IN PROGRESS";
+    display: block;
+    padding: 10px 16px 0;
+    color: var(--terracotta);
+    font-family: var(--sans);
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+}}
+
+[data-testid="stStatusWidget"] p,
+[data-testid="stStatus"] p,
+[data-testid="stProgress"] p {{
+    color: var(--sage-dark) !important;
+    font-family: var(--sans) !important;
+}}
+
+[data-testid="stProgress"] > div {{
+    height: 3px !important;
+    overflow: hidden;
+    border-radius: 0 !important;
+    background: rgba(41,42,38,.12) !important;
+}}
+
+[data-testid="stProgress"] > div > div,
+[data-testid="stProgress"] > div > div > div,
+[data-testid="stProgress"] > div > div > div > div {{
+    border-radius: 0 !important;
+    background: var(--terracotta) !important;
+}}
+
+[data-testid="stSpinner"] {{
+    color: var(--terracotta) !important;
+}}
+
+[data-testid="stSpinner"] > div {{
+    border-top-color: var(--terracotta) !important;
+}}
+
 @keyframes gentle-rise {{
     from {{ opacity: 0; transform: translateY(18px); }}
     to {{ opacity: 1; transform: translateY(0); }}
@@ -614,6 +708,10 @@ h1, h2, h3 {{
         min-width: max-content;
     }}
     .chapter-heading {{
+        grid-template-columns: 56px 1fr;
+        gap: 12px;
+    }}
+    .flow-section-title {{
         grid-template-columns: 56px 1fr;
         gap: 12px;
     }}
