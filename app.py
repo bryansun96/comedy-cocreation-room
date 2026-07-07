@@ -1,3 +1,5 @@
+from html import escape
+
 import streamlit as st
 
 from config import build_runtime_config, get_missing_runtime_fields, get_runtime_defaults
@@ -546,8 +548,15 @@ code, pre {
 
 
 def inject_design_system():
-    st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     st.markdown(build_v0_css(), unsafe_allow_html=True)
+
+
+def _safe(value) -> str:
+    return escape(str(value or ""))
+
+
+def _list_markup(items) -> str:
+    return "".join(f"<li>{_safe(item)}</li>" for item in (items or []))
 
 
 def initialize_session_state():
@@ -849,66 +858,104 @@ def render_premise_cards(premises):
     selected_index = None
     for idx, premise in enumerate(premises[:3]):
         with cols[idx]:
-            with st.container(border=True):
-                st.markdown(f"### {premise['title']}")
-                st.markdown(f"**这个点子在说什么**：{premise['premise']}")
-                st.markdown(f"**人物关系**：{premise.get('character_dynamic', '')}")
-                st.markdown(f"**好玩的冲突**：{premise['core_conflict']}")
-                st.markdown(f"**为什么可能有戏**：{premise['why_it_might_work']}")
-                st.markdown(f"**目前最大的风险**：{premise['biggest_risk']}")
-                st.markdown(f"**可以怎么升级**：{premise['escalation_path']}")
-                if st.button("我想继续看这个", key=f"use_{idx}"):
-                    selected_index = idx
+            offset = " offset" if idx == 1 else ""
+            st.markdown(
+                f"""
+                <article class="direction-card workflow-direction{offset}">
+                    <div class="card-index">{idx + 1:02d} / DIRECTION</div>
+                    <h3>{_safe(premise['title'])}</h3>
+                    <p>{_safe(premise['premise'])}</p>
+                    <dl class="workflow-facts">
+                        <dt>人物关系</dt><dd>{_safe(premise.get('character_dynamic', ''))}</dd>
+                        <dt>冲突引擎</dt><dd>{_safe(premise['core_conflict'])}</dd>
+                        <dt>升级路径</dt><dd>{_safe(premise['escalation_path'])}</dd>
+                    </dl>
+                    <p class="risk">风险：{_safe(premise['biggest_risk'])}</p>
+                </article>
+                """,
+                unsafe_allow_html=True,
+            )
+            if st.button("继续看这个方向", key=f"use_{idx}", use_container_width=True):
+                selected_index = idx
     return selected_index
 
 
 def render_selected_direction(selected):
-    with st.container(border=True):
-        st.markdown("<div class='panel-kicker'>Step 3 · 当前选中的方向</div>", unsafe_allow_html=True)
-        st.subheader("我们先围绕这个点子继续分析")
-        st.caption("下面的反馈都会基于这个方向展开。你可以把它理解成一张临时草图，而不是最终定稿。")
-        st.markdown(f"**方向**：{selected['title']}")
-        st.markdown(f"**一句话说明**：{selected['summary']}")
-        st.markdown(f"**形式**：{selected['format']}")
-        st.markdown(f"**角色关系**：{selected['character_setup']}")
-        st.markdown(f"**希望观众感受到**：{selected['audience_feeling']}")
+    st.markdown(
+        f"""
+        <section class="selected-feature">
+            <div>
+                <div class="panel-kicker">Step 3 · 当前选中的方向</div>
+                <h2>我们先围绕这个点子继续分析</h2>
+                <p>{_safe(selected['summary'])}</p>
+            </div>
+            <dl class="selected-meta">
+                <div><dt>方向</dt><dd>{_safe(selected['title'])}</dd></div>
+                <div><dt>形式</dt><dd>{_safe(selected['format'])}</dd></div>
+                <div><dt>角色关系</dt><dd>{_safe(selected['character_setup'])}</dd></div>
+                <div><dt>观众感受</dt><dd>{_safe(selected['audience_feeling'])}</dd></div>
+            </dl>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_three_role_critique(critique):
-    st.markdown("<div class='panel-kicker'>Step 4 · 从三个角度看看它稳不稳</div>", unsafe_allow_html=True)
-    st.subheader("编剧、演员、导演会分别担心什么")
-    st.caption("不用有专业背景也能看：编剧看故事结构，演员看角色好不好演，导演看现场或画面能不能成立。")
-    cols = st.columns(3)
     mapping = [
-        ("编剧视角", "看这个点子是否清楚、冲突能不能持续", critique["writer"]),
-        ("演员视角", "看角色有没有可演的动作、态度和节奏", critique["performer"]),
-        ("导演视角", "看场面、节奏和观众理解是否顺畅", critique["director"]),
+        ("编剧视角", "Writer", "看这个点子是否清楚、冲突能不能持续", critique["writer"]),
+        ("演员视角", "Performer", "看角色有没有可演的动作、态度和节奏", critique["performer"]),
+        ("导演视角", "Director", "看场面、节奏和观众理解是否顺畅", critique["director"]),
     ]
-    for col, (title, helper, content) in zip(cols, mapping):
-        with col:
-            with st.container(border=True):
-                st.markdown(f"### {title}")
-                st.caption(helper)
-                st.markdown("**已经不错的地方**")
-                for item in content["what_works"]:
-                    st.markdown(f"- {item}")
-                st.markdown("**还需要加强的地方**")
-                for item in content["what_feels_weak"]:
-                    st.markdown(f"- {item}")
-                st.markdown("**这一角度最想先改**")
-                for item in content["most_important_fix"]:
-                    st.markdown(f"- {item}")
+    role_markup = ""
+    for title, en_title, helper, content in mapping:
+        role_markup += (
+            '<article class="role-card workflow-role-card">'
+            f'<div class="tiny-label">{_safe(en_title)}</div>'
+            f"<h3>{_safe(title)}</h3>"
+            f"<p>{_safe(helper)}</p>"
+            '<div class="role-note"><strong>已经不错</strong>'
+            f"<ul>{_list_markup(content['what_works'])}</ul></div>"
+            '<div class="role-note"><strong>还需要加强</strong>'
+            f"<ul>{_list_markup(content['what_feels_weak'])}</ul></div>"
+            '<div class="role-note"><strong>先改这里</strong>'
+            f"<ul>{_list_markup(content['most_important_fix'])}</ul></div>"
+            "</article>"
+        )
 
-    st.markdown("### 这轮最值得先讨论的问题")
-    st.markdown("**大家都比较同意的点**")
-    for item in critique["synthesis"]["alignments"]:
-        st.markdown(f"- {item}")
-    st.markdown("**还没有完全想清楚的点**")
-    for item in critique["synthesis"]["differences"]:
-        st.markdown(f"- {item}")
-    st.markdown("**建议下一轮先聊什么**")
-    for item in critique["synthesis"]["next_discussion"]:
-        st.markdown(f"- {item}")
+    synthesis = critique["synthesis"]
+    st.markdown(
+        f"""
+        <section class="about-shell workflow-about">
+            <header class="about-header">
+                <div class="chapter-number about-step-number">03</div>
+                <div class="chapter-kicker">Three ways of seeing</div>
+                <h2>About the Idea</h2>
+                <p>从纸面，到角色，再到现场</p>
+                <div class="sun-illustration" aria-hidden="true"></div>
+            </header>
+            <div class="role-grid">{role_markup}</div>
+        </section>
+        <section class="synthesis-strip">
+            <article>
+                <div class="tiny-label">Alignment</div>
+                <h3>大家都同意</h3>
+                <ul>{_list_markup(synthesis['alignments'])}</ul>
+            </article>
+            <article>
+                <div class="tiny-label">Open Questions</div>
+                <h3>还没想清楚</h3>
+                <ul>{_list_markup(synthesis['differences'])}</ul>
+            </article>
+            <article>
+                <div class="tiny-label">Next Discussion</div>
+                <h3>下一轮先聊</h3>
+                <ul>{_list_markup(synthesis['next_discussion'])}</ul>
+            </article>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_freshness_check(freshness):
@@ -921,26 +968,35 @@ def render_freshness_check(freshness):
         "Weak": "偏弱",
     }
     overall = freshness_level_map.get(freshness.get("overall"), freshness.get("overall"))
-    st.subheader("这个点子会不会太像常见套路")
-    st.caption("这里检查的不是“好不好笑”的最终结论，而是提醒它有没有太熟、太泛、太像别人已经做过的风险。")
-    st.markdown(f"**整体判断**：{overall}")
-    st.markdown(f"**一句话诊断**：{freshness['diagnosis']}")
-
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("**哪里比较新鲜**")
-        for item in freshness["fresh_points"]:
-            st.markdown(f"- {item}")
-        st.markdown("**为什么会有这个风险**")
-        for item in freshness["why_risk"]:
-            st.markdown(f"- {item}")
-    with c2:
-        st.markdown("**哪里可能太常见**")
-        for item in freshness["generic_risks"]:
-            st.markdown(f"- {item}")
-        st.markdown("**如果继续做，可以先往哪改**")
-        for item in freshness["improvements"]:
-            st.markdown(f"- {item}")
+    st.markdown(
+        f"""
+        <section class="chapter-heading freshness-heading">
+            <div class="chapter-number">04</div>
+            <div>
+                <div class="chapter-kicker">Keep it fresh · { _safe(overall) }</div>
+                <h2 class="chapter-title">退后一步，看看它是不是正走向熟悉的套路</h2>
+                <p class="chapter-intro">{_safe(freshness['diagnosis'])}</p>
+            </div>
+        </section>
+        <section class="fresh-grid workflow-fresh-grid">
+            <article class="fresh-panel dark">
+                <div class="tiny-label">What feels alive</div>
+                <h3>哪里比较新鲜</h3>
+                <ul>{_list_markup(freshness['fresh_points'])}</ul>
+                <h4>风险为什么会出现</h4>
+                <ul>{_list_markup(freshness['why_risk'])}</ul>
+            </article>
+            <article class="fresh-panel">
+                <div class="tiny-label">What feels familiar</div>
+                <h3>哪里可能太常见</h3>
+                <ul>{_list_markup(freshness['generic_risks'])}</ul>
+                <h4>可以先往哪改</h4>
+                <ul>{_list_markup(freshness['improvements'])}</ul>
+            </article>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_consensus_alert(consensus):
@@ -952,33 +1008,54 @@ def render_consensus_alert(consensus):
         "Medium": "中等",
         "Low": "低",
     }
-    st.subheader("大家都在意的重点")
-    st.info("如果想快速推进，可以先处理这些多个角度都提到的问题。")
     level = consensus.get("consensus_level")
-    if level:
-        st.caption(f"一致程度：{consensus_level_map.get(level, level)}")
-    for item in consensus.get("shared_conclusions", []):
-        st.markdown(f"- {item}")
-    focus = consensus.get("recommended_focus")
-    if focus:
-        st.markdown(f"**建议优先讨论**：{focus}")
+    focus = consensus.get("recommended_focus") or ""
     reasoning = consensus.get("reasoning")
+    st.markdown(
+        f"""
+        <section class="consensus-panel">
+            <div>
+                <div class="tiny-label">Consensus · {_safe(consensus_level_map.get(level, level) if level else '未返回')}</div>
+                <h3>大家都在意的重点</h3>
+                <p>如果想快速推进，可以先处理这些多个角度都提到的问题。</p>
+            </div>
+            <div>
+                <ul>{_list_markup(consensus.get('shared_conclusions', []))}</ul>
+                <p class="consensus-focus">建议优先讨论：{_safe(focus)}</p>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
     if reasoning:
         with st.expander("为什么这样判断", expanded=False):
             st.markdown(reasoning)
 
 
 def render_freshness_remediation(remediations):
-    st.subheader("如果觉得太常见，可以试试这些转向")
-    st.warning("这个方向现在有一点熟悉感，下面补了 3 个可以继续讨论的改写方向。")
-    cols = st.columns(min(3, len(remediations))) if remediations else []
-    for col, remediation in zip(cols, remediations[:3]):
-        with col:
-            with st.container(border=True):
-                st.markdown(f"### {remediation['what_to_change']}")
-                st.markdown(f"**为什么现在像套路**：{remediation['why_its_cliche']}")
-                st.markdown(f"**可以换成什么**：{remediation['fresh_alternative']}")
-                st.markdown(f"**一个具体转法**：{remediation['example_twist']}")
+    if not remediations:
+        return
+    cards = ""
+    for idx, remediation in enumerate(remediations[:3], start=1):
+        cards += (
+            '<article class="remediation-card">'
+            f'<div class="card-index">{idx:02d} / TURN</div>'
+            f"<h3>{_safe(remediation['what_to_change'])}</h3>"
+            f"<p><strong>为什么像套路</strong>{_safe(remediation['why_its_cliche'])}</p>"
+            f"<p><strong>可以换成什么</strong>{_safe(remediation['fresh_alternative'])}</p>"
+            f"<p><strong>具体转法</strong>{_safe(remediation['example_twist'])}</p>"
+            "</article>"
+        )
+    st.markdown(
+        f"""
+        <section class="remediation-section">
+            <div class="chapter-kicker">Freshness remediation</div>
+            <h2>如果觉得太常见，可以试试这些转向</h2>
+            <div class="remediation-grid">{cards}</div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 _AGENT_LABEL_MAP = {
@@ -1108,23 +1185,46 @@ def render_react_trace_panel() -> None:
 
 
 def render_next_iteration_plan(moves):
-    st.markdown("<div class='panel-kicker'>Step 5 · 带走下一轮修改重点</div>", unsafe_allow_html=True)
-    st.subheader("接下来先改哪 3 件事")
-    st.caption("如果你想继续发展这个方向，可以先从下面 3 个动作开始，而不是一次性重写全部。")
-    cols = st.columns(3)
-    for col, move in zip(cols, moves[:3]):
-        with col:
-            with st.container(border=True):
-                st.markdown(f"### {move['move']}")
-                st.markdown(f"**为什么重要**：{move['why']}")
-                st.markdown(f"**更好版本可能是什么样**：{move['better_version']}")
+    rows = ""
+    for idx, move in enumerate(moves[:3], start=1):
+        rows += (
+            '<div class="timeline-row">'
+            f'<div class="time">{idx:02d}</div>'
+            f"<h3>{_safe(move['move'])}</h3>"
+            f"<p><strong>为什么重要</strong><br>{_safe(move['why'])}<br><br>"
+            f"<strong>更好版本</strong><br>{_safe(move['better_version'])}</p>"
+            "</div>"
+        )
+    st.markdown(
+        f"""
+        <section class="chapter-heading">
+            <div class="chapter-number">05</div>
+            <div>
+                <div class="chapter-kicker">Take the next step</div>
+                <h2 class="chapter-title">下一轮，不必全部重写，只做这三件事</h2>
+                <p class="chapter-intro">把讨论收束成动作，让团队知道下一次坐下来时应该从哪里继续。</p>
+            </div>
+        </section>
+        <section class="timeline">{rows}</section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_human_judgment_gate(items):
-    st.subheader("最后仍然需要人来判断")
-    st.warning("这些建议只是帮你整理讨论方向。最后好不好笑、适不适合演、要不要继续做，仍然要由创作者自己决定。")
-    for item in items:
-        st.markdown(f"- {item}")
+    st.markdown(
+        f"""
+        <section class="judgment-panel">
+            <div>
+                <div class="eyebrow">The work continues</div>
+                <h2>最后仍然需要人来判断。</h2>
+                <p>这些建议只是帮你整理讨论方向。最后好不好笑、适不适合演、要不要继续做，仍然要由创作者自己决定。</p>
+            </div>
+            <ul>{_list_markup(items)}</ul>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_prompt_debug():

@@ -315,11 +315,68 @@ h1, h2, h3 {{
     box-shadow: none !important;
 }}
 
+.stTextInput,
+.stTextArea {{
+    margin-bottom: 1rem;
+}}
+
+.stTextInput > div,
+.stTextArea > div,
+.stTextInput > div > div,
+.stTextArea > div > div,
+.stTextInput [data-baseweb="input"],
+.stTextArea [data-baseweb="textarea"],
+.stTextInput [data-baseweb="base-input"],
+.stTextArea [data-baseweb="base-input"],
+[data-testid="stTextInputRootElement"],
+[data-testid="stTextAreaRootElement"] {{
+    border: 1px solid rgba(41,42,38,.18) !important;
+    border-radius: 4px !important;
+    background:
+        linear-gradient(180deg, rgba(247,243,235,.82), rgba(238,232,220,.58)) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,250,241,.72),
+        0 10px 24px rgba(64,52,35,.035) !important;
+}}
+
+.stTextInput input,
+.stTextArea textarea {{
+    padding: 12px 14px !important;
+    background: transparent !important;
+}}
+
+.stTextArea textarea {{
+    background:
+        linear-gradient(180deg, rgba(247,243,235,.48), rgba(238,232,220,.18)) !important;
+}}
+
+.stTextInput input::placeholder,
+.stTextArea textarea::placeholder {{
+    color: rgba(85,89,77,.52) !important;
+}}
+
 .stTextInput input:focus,
 .stTextArea textarea:focus,
 [data-baseweb="select"] > div:focus-within {{
     border-bottom-color: var(--terracotta) !important;
     box-shadow: 0 2px 0 var(--terracotta) !important;
+}}
+
+.stTextInput:focus-within > div,
+.stTextArea:focus-within > div,
+.stTextInput:focus-within [data-baseweb="input"],
+.stTextArea:focus-within [data-baseweb="textarea"],
+.stTextInput:focus-within [data-baseweb="base-input"],
+.stTextArea:focus-within [data-baseweb="base-input"],
+[data-testid="stTextInputRootElement"]:focus-within,
+[data-testid="stTextAreaRootElement"]:focus-within {{
+    border-color: rgba(164,95,67,.54) !important;
+    background:
+        linear-gradient(180deg, rgba(247,243,235,.96), rgba(238,232,220,.72)) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,250,241,.86),
+        0 0 0 3px rgba(164,95,67,.09),
+        0 12px 28px rgba(64,52,35,.06) !important;
 }}
 
 .stTextArea textarea {{
@@ -679,6 +736,281 @@ h1, h2, h3 {{
     animation: gentle-rise 600ms cubic-bezier(.22,.65,.3,1) both;
 }}
 
+.workflow-direction {{
+    min-height: 520px;
+}}
+
+.workflow-facts {{
+    display: grid;
+    gap: 12px;
+    margin: 24px 0 0;
+}}
+
+.workflow-facts dt,
+.selected-meta dt {{
+    color: var(--terracotta);
+    font-family: var(--sans);
+    font-size: .66rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}}
+
+.workflow-facts dd,
+.selected-meta dd {{
+    margin: 4px 0 0;
+    color: var(--sage-dark);
+    line-height: 1.68;
+}}
+
+.selected-feature {{
+    margin: 80px 0 86px;
+    padding: clamp(32px, 5vw, 64px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+    gap: clamp(28px, 5vw, 70px);
+    align-items: end;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+    background: rgba(247,243,235,.42);
+}}
+
+.selected-feature h2 {{
+    max-width: 720px;
+    margin: 18px 0 16px;
+    font-family: var(--display) !important;
+    font-size: clamp(2.5rem, 5vw, 5.2rem);
+    line-height: 1;
+    letter-spacing: -.045em;
+}}
+
+.selected-feature p {{
+    max-width: 690px;
+    color: var(--sage-dark);
+    font-size: 1rem;
+}}
+
+.selected-meta {{
+    display: grid;
+    gap: 1px;
+    margin: 0;
+    background: var(--line);
+    border: 1px solid var(--line);
+}}
+
+.selected-meta > div {{
+    padding: 18px 20px;
+    background: var(--paper-light);
+}}
+
+.workflow-about {{
+    margin-top: 88px;
+}}
+
+.workflow-role-card {{
+    padding-top: 4px;
+}}
+
+.role-note {{
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(41,42,38,.16);
+}}
+
+.role-note strong {{
+    display: block;
+    margin-bottom: 8px;
+    color: var(--terracotta);
+    font-family: var(--sans);
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}}
+
+.role-note ul,
+.synthesis-strip ul,
+.workflow-fresh-grid ul,
+.consensus-panel ul,
+.judgment-panel ul {{
+    margin: 0;
+    padding-left: 1.1rem;
+}}
+
+.synthesis-strip {{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin: -52px 0 98px;
+    background: var(--line);
+    border: 1px solid var(--line);
+}}
+
+.synthesis-strip article {{
+    min-height: 240px;
+    padding: clamp(24px, 3vw, 38px);
+    background: rgba(247,243,235,.88);
+}}
+
+.synthesis-strip h3,
+.consensus-panel h3,
+.remediation-section h2 {{
+    margin: 16px 0 18px;
+    font-family: var(--display) !important;
+    font-size: clamp(1.75rem, 3vw, 2.7rem);
+    line-height: 1.06;
+}}
+
+.freshness-heading {{
+    margin-top: 82px;
+}}
+
+.workflow-fresh-grid {{
+    margin-top: 8px;
+}}
+
+.workflow-fresh-grid h4 {{
+    margin: 30px 0 12px;
+    color: var(--terracotta);
+    font-family: var(--sans);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}}
+
+.workflow-fresh-grid li {{
+    margin-bottom: 10px;
+    color: inherit;
+    line-height: 1.72;
+}}
+
+.consensus-panel {{
+    margin: 74px 0 88px;
+    padding: clamp(28px, 4vw, 52px);
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: clamp(24px, 5vw, 70px);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+    background:
+        linear-gradient(90deg, rgba(247,243,235,.92), rgba(222,213,197,.42));
+}}
+
+.consensus-panel p,
+.consensus-panel li {{
+    color: var(--sage-dark);
+}}
+
+.consensus-focus {{
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--ink) !important;
+    font-family: var(--display);
+    font-size: 1.25rem;
+    line-height: 1.45;
+}}
+
+.remediation-section {{
+    margin: 22px 0 94px;
+}}
+
+.remediation-section h2 {{
+    max-width: 780px;
+    margin-bottom: 34px;
+}}
+
+.remediation-grid {{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+}}
+
+.remediation-card {{
+    min-height: 360px;
+    padding: clamp(24px, 3vw, 36px);
+    background: var(--paper-light);
+}}
+
+.remediation-card h3 {{
+    margin: 28px 0 22px;
+    font-family: var(--display) !important;
+    font-size: 2rem;
+    line-height: 1.08;
+}}
+
+.remediation-card p {{
+    color: var(--sage-dark);
+    font-size: .92rem;
+}}
+
+.remediation-card strong,
+.timeline-row strong {{
+    display: inline-block;
+    margin-bottom: 4px;
+    color: var(--terracotta);
+    font-family: var(--sans);
+    font-size: .66rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}}
+
+.judgment-panel {{
+    min-height: 520px;
+    margin: 82px 0 28px;
+    padding: clamp(32px, 6vw, 72px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, .82fr);
+    gap: clamp(28px, 5vw, 68px);
+    align-items: end;
+    background:
+        linear-gradient(180deg, rgba(35,35,30,.05), rgba(35,35,30,.72)),
+        url("{sunset}") center / cover;
+}}
+
+.judgment-panel h2 {{
+    max-width: 760px;
+    margin: 0;
+    color: #fffaf1 !important;
+    font-family: var(--display) !important;
+    font-size: clamp(3rem, 6vw, 6.1rem);
+    line-height: .98;
+}}
+
+.judgment-panel p,
+.judgment-panel li {{
+    color: rgba(255,250,241,.74) !important;
+}}
+
+.judgment-panel ul {{
+    padding: 24px 24px 24px 42px;
+    border-left: 1px solid rgba(255,250,241,.32);
+    background: rgba(41,42,38,.18);
+    backdrop-filter: blur(5px);
+}}
+
+[data-testid="stMetric"] {{
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    background: transparent;
+}}
+
+[data-testid="stMetricLabel"] p {{
+    color: var(--terracotta) !important;
+    font-family: var(--sans);
+    font-size: .66rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}}
+
+[data-testid="stMetricValue"] {{
+    color: var(--ink) !important;
+    font-family: var(--display);
+}}
+
 @media (max-width: 760px) {{
     .block-container {{
         padding: .6rem 1rem 4rem;
@@ -751,6 +1083,21 @@ h1, h2, h3 {{
         min-height: 520px;
         margin-top: 60px;
         padding: 28px 22px;
+    }}
+    .selected-feature,
+    .consensus-panel,
+    .judgment-panel {{
+        grid-template-columns: 1fr;
+    }}
+    .workflow-direction {{
+        min-height: 0;
+    }}
+    .synthesis-strip,
+    .remediation-grid {{
+        grid-template-columns: 1fr;
+    }}
+    .synthesis-strip {{
+        margin-top: -28px;
     }}
 }}
 
